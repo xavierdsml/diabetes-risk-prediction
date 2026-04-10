@@ -1,0 +1,51 @@
+{
+  "Logistic Regression": {
+    "accuracy": 0.73593,
+    "precision": 0.65625,
+    "recall": 0.51852,
+    "f1": 0.57931,
+    "auc_roc": 0.83942
+  },
+  "Decision Tree": {
+    "accuracy": 0.7013,
+    "precision": 0.57143,
+    "recall": 0.59259,
+    "f1": 0.58182,
+    "auc_roc": 0.6763
+  },
+  "Random Forest": {
+    "accuracy": 0.73593,
+    "precision": 0.65625,
+    "recall": 0.51852,
+    "f1": 0.57931,
+    "auc_roc": 0.82362
+  },
+  "XGBoost": {
+    "accuracy": 0.74459,
+    "precision": 0.65278,
+    "recall": 0.58025,
+    "f1": 0.61438,
+    "auc_roc": 0.7944
+  },
+  "LightGBM": {
+    "accuracy": 0.7316,
+    "precision": 0.62667,
+    "recall": 0.58025,
+    "f1": 0.60256,
+    "auc_roc": 0.81111
+  },
+  "CatBoost": {
+    "accuracy": 0.75758,
+    "precision": 0.70492,
+    "recall": 0.53086,
+    "f1": 0.60563,
+    "auc_roc": 0.83276
+  },
+  "Hybrid RF-GBDT": {
+    "accuracy": 0.75758,
+    "precision": 0.68116,
+    "recall": 0.58025,
+    "f1": 0.62667,
+    "auc_roc": 0.83424
+  }
+}
