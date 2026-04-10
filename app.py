@@ -36,15 +36,33 @@ def _load_resources():
     """Load ML models, scaler, and metrics report at startup."""
     global models, scaler, metrics_report
 
-    # Try loading models -- gracefully handle missing ML pipeline
+    # Try loading models -- if they fail, retrain automatically
     try:
         from ml.predict import load_all_models, load_scaler
         models = load_all_models()
         scaler = load_scaler()
+        # Verify models actually work by doing a test prediction
+        import numpy as np
+        import pandas as pd
+        from config import FEATURE_COLUMNS
+        test_input = pd.DataFrame([[0.5]*8], columns=FEATURE_COLUMNS)
+        test_scaled = scaler.transform(test_input)
+        list(models.values())[0].predict(pd.DataFrame(test_scaled, columns=FEATURE_COLUMNS))
         print(f"[INFO] Loaded {len(models)} model(s) and scaler.")
     except Exception as e:
-        print(f"[WARN] Could not load models/scaler: {e}")
-        print("[WARN] Prediction features will be unavailable until models are trained.")
+        print(f"[WARN] Could not load models: {e}")
+        print("[INFO] Training models from scratch...")
+        try:
+            from ml.train import main as train_main
+            train_main()
+            from ml.predict import load_all_models, load_scaler
+            models = load_all_models()
+            scaler = load_scaler()
+            print(f"[INFO] Trained and loaded {len(models)} model(s).")
+        except Exception as e2:
+            print(f"[ERROR] Training failed: {e2}")
+            import traceback
+            traceback.print_exc()
 
     # Load metrics report
     if os.path.exists(METRICS_PATH):
