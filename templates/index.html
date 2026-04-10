@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block title %}DiabetesPredict — Home{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="hero-title" data-aos="fade-up">
+                    Diabetes Risk<br>
+                    <span class="text-gradient">Prediction System</span>
+                </h1>
+                <p class="hero-subtitle mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Powered by a novel Hybrid RF-GBDT model and 7 state-of-the-art
+                    machine learning algorithms for highly accurate diabetes risk assessment.
+                </p>
+                <div class="d-flex gap-3 flex-wrap" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{{ url_for('predict') }}" class="btn btn-gradient btn-gradient-lg">
+                        Check Your Risk <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-gradient btn-gradient-lg">
+                        View Dashboard
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-left" data-aos-delay="300">
+                <div class="hero-pipeline">
+                    <div class="pipeline-header">
+                        <span class="dot dot-green"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-blue"></span>
+                        DIABETES_PREDICTION_PIPELINE
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">dataset</span>
+                        <span class="metric-value">PIMA_768_records</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">models_trained</span>
+                        <span class="metric-value">7 / 7 complete</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">best_accuracy</span>
+                        <span class="metric-value">75.76%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">best_auc_roc</span>
+                        <span class="metric-value">0.8394</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">pipeline_status</span>
+                        <span class="metric-value">READY</span>
+                    </div>
+                    <div class="metric-row" style="border:none;">
+                        <span class="metric-label">hybrid_rf_gbdt</span>
+                        <span class="metric-value">DEPLOYED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Row -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body py-4">
+                        <div class="stat-number">768</div>
+                        <div class="stat-label">Patients Analyzed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body py-4">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">ML Models Compared</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body py-4">
+                        <div class="stat-number">83.9%</div>
+                        <div class="stat-label">Best AUC-ROC Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 section-gradient">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2>What You Can Do</h2>
+            <p>Explore powerful tools backed by cutting-edge research</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrapper blue">
+                        <i class="bi bi-ui-checks-grid"></i>
+                    </div>
+                    <h5>Predict Risk</h5>
+                    <p>Enter 8 simple health parameters and instantly receive a diabetes risk prediction from multiple ML models.</p>
+                    <a href="{{ url_for('predict') }}" class="btn btn-gradient btn-sm px-4">Try Now <i class="bi bi-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrapper purple">
+                        <i class="bi bi-bar-chart-line-fill"></i>
+                    </div>
+                    <h5>Compare Models</h5>
+                    <p>Explore an interactive dashboard comparing 7 ML models on accuracy, precision, recall, F1 score, and ROC-AUC.</p>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-gradient btn-sm px-4">View Dashboard</a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrapper green">
+                        <i class="bi bi-journal-richtext"></i>
+                    </div>
+                    <h5>Research-Backed</h5>
+                    <p>Built on a peer-reviewed research paper proposing a novel Hybrid RF-GBDT ensemble model for diabetes prediction.</p>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline-gradient btn-sm px-4">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Project -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                <h2 style="font-size:2rem;">About the <span class="text-gradient">Project</span></h2>
+                <p class="mt-3">
+                    This system is developed as part of a B.Tech final-year research project at
+                    <strong>Raj Kumar Goel Institute of Technology</strong>. It implements a comprehensive
+                    machine-learning pipeline for diabetes risk prediction using the internationally
+                    recognized PIMA Indians Diabetes Dataset.
+                </p>
+                <p>
+                    Seven classification algorithms are trained and compared, including traditional
+                    models, popular ensembles, and a novel <strong>Hybrid RF-GBDT</strong> model
+                    that achieves state-of-the-art accuracy.
+                </p>
+                <a href="{{ url_for('about') }}" class="btn btn-gradient px-4">
+                    Read the Research <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="col-lg-6 text-center" data-aos="fade-left">
+                <div class="p-5 rounded-3" style="background: var(--gradient-subtle); border: 1px solid rgba(0,0,0,0.06);">
+                    <i class="bi bi-diagram-3-fill text-gradient" style="font-size:7rem;"></i>
+                    <p class="mt-3 mb-0" style="color: var(--color-text-secondary); font-weight: 500;">Hybrid RF-GBDT Ensemble Architecture</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container" data-aos="fade-up">
+        <div class="cta-section">
+            <h3>Ready to Assess Your Diabetes Risk?</h3>
+            <p class="mb-4">Enter your health parameters and get instant predictions from 7 ML models</p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{{ url_for('predict') }}" class="btn btn-white">
+                    Start Prediction <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-white">
+                    View Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
