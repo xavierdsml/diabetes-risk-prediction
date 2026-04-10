@@ -221,7 +221,7 @@ This project is based on the research paper:
 
 **"A Hybrid GBDT Model for Advanced Diabetes Risk Prediction"**
 
-*Authors:* Kunal Kaushik, Tushar Gupta, Sanjana Jain, Manjari Gupta
+*Authors:* Tushar Gupta, Manjari Gupta, Kunal Kaushik, Sanjana Jain
 
 *Guide:* Gyanender Kumar (Assistant Professor, Dept. of CSE - Data Science, RKGIT)
 
