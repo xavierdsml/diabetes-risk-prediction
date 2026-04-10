@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}DiabetesPredict — About{% endblock %}
+
+{% block content %}
+<section class="py-5 section-gradient">
+    <div class="container">
+
+        <!-- Page Header -->
+        <div class="section-header" data-aos="fade-up">
+            <h2>About the <span class="text-gradient">Research</span></h2>
+            <p>Understanding the science behind the system</p>
+        </div>
+
+        <!-- Research Paper -->
+        <div class="card border-0 shadow-sm mb-5" data-aos="fade-up">
+            <div class="card-body p-4 p-md-5">
+                <h4 class="fw-bold mb-2">A Hybrid GBDT Model for Advanced Diabetes Risk Prediction</h4>
+                <p class="mb-4" style="color: var(--color-text-secondary); font-style: italic;">
+                    Kunal Kaushik, Tushar Gupta, Sanjana Jain, Manjari Gupta
+                    &mdash; Raj Kumar Goel Institute of Technology
+                </p>
+
+                <h6 class="fw-bold text-gradient" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Abstract</h6>
+                <p>
+                    Diabetes mellitus is one of the most prevalent chronic diseases worldwide, and
+                    early detection is critical for effective management and prevention of severe
+                    complications. This research proposes a novel <strong>Hybrid RF-GBDT</strong>
+                    (Random Forest &ndash; Gradient Boosted Decision Trees) ensemble model that
+                    combines the bagging strength of Random Forest with the boosting power of
+                    gradient-boosted trees to achieve superior prediction accuracy.
+                </p>
+                <p>
+                    The study evaluates seven machine-learning classifiers &mdash; Logistic
+                    Regression, Decision Tree, Random Forest, XGBoost, LightGBM, CatBoost, and the
+                    proposed Hybrid RF-GBDT &mdash; on the PIMA Indians Diabetes Dataset containing
+                    768 patient records with 8 clinical features.
+                </p>
+                <p class="mb-0">
+                    Experimental results demonstrate that the Hybrid RF-GBDT model achieves
+                    competitive accuracy and the highest F1 score, validating the effectiveness
+                    of ensemble hybridization for clinical decision support systems.
+                </p>
+            </div>
+        </div>
+
+        <!-- Methodology Flowchart -->
+        <div class="card border-0 shadow-sm mb-5" id="methodology" data-aos="fade-up">
+            <div class="card-header">
+                <i class="bi bi-diagram-3 me-2 text-gradient"></i>Methodology
+            </div>
+            <div class="card-body p-4">
+                <div class="methodology-flow">
+                    <div class="row g-0 justify-content-center align-items-center text-center">
+                        {% set steps = [
+                            {"icon": "bi-database-fill", "label": "Data Collection", "bg": "var(--color-blue)"},
+                            {"icon": "bi-funnel-fill", "label": "Preprocessing", "bg": "#0ea5e9"},
+                            {"icon": "bi-columns-gap", "label": "Feature Extraction", "bg": "#8b5cf6"},
+                            {"icon": "bi-gear-fill", "label": "Model Training", "bg": "#ec4899"},
+                            {"icon": "bi-clipboard-data-fill", "label": "Evaluation", "bg": "#f59e0b"},
+                            {"icon": "bi-lightning-charge-fill", "label": "Prediction", "bg": "#22c55e"}
+                        ] %}
+                        {% for step in steps %}
+                        <div class="col-auto">
+                            <div class="flow-step">
+                                <div class="flow-icon text-white" style="background: {{ step.bg }};">
+                                    <i class="bi {{ step.icon }}"></i>
+                                </div>
+                                <span>{{ step.label }}</span>
+                            </div>
+                        </div>
+                        {% if not loop.last %}
+                        <div class="col-auto flow-arrow d-none d-md-block">
+                            <i class="bi bi-arrow-right fs-4" style="color: #cbd5e1;"></i>
+                        </div>
+                        <div class="col-auto flow-arrow d-md-none">
+                            <i class="bi bi-arrow-down fs-4" style="color: #cbd5e1;"></i>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Guide -->
+        <div class="section-header" data-aos="fade-up">
+            <h2>Project <span class="text-gradient">Guide</span></h2>
+        </div>
+        <div class="row justify-content-center mb-5" data-aos="fade-up">
+            <div class="col-lg-5 col-md-6">
+                <div class="guide-card text-center">
+                    <div class="team-avatar mx-auto">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h5 class="fw-bold mb-1">Gyanender Kumar</h5>
+                    <span class="tech-badge mb-2" style="font-size: 0.8rem;">Project Guide</span>
+                    <p class="mb-1 fw-medium" style="color: var(--color-text); font-size: 0.92rem;">Assistant Professor</p>
+                    <p class="mb-0 small" style="color: var(--color-text-secondary);">Department of CSE (Data Science)<br>Raj Kumar Goel Institute of Technology</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="section-header" id="team" data-aos="fade-up">
+            <h2>Research <span class="text-gradient">Team</span></h2>
+        </div>
+        <div class="row g-4 mb-5 justify-content-center">
+            {% set team = [
+                {"name": "Kunal Kaushik", "dept": "Department of CSE (Data Science)"},
+                {"name": "Tushar Gupta", "dept": "Department of CSE (Data Science)"},
+                {"name": "Sanjana Jain", "dept": "Department of CSE (Data Science)"},
+                {"name": "Manjari Gupta", "dept": "Department of CSE (Data Science)"},
+            ] %}
+
+            {% for member in team %}
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                <div class="team-card h-100">
+                    <div class="team-avatar mx-auto">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">{{ member.name }}</h6>
+                    <span class="tech-badge mb-2" style="font-size: 0.78rem;">Researcher</span>
+                    <p class="small mb-0" style="color: var(--color-text-secondary);">{{ member.dept }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="card border-0 shadow-sm" data-aos="fade-up">
+            <div class="card-header">
+                <i class="bi bi-stack me-2 text-gradient"></i>Technology Stack
+            </div>
+            <div class="card-body p-4">
+                <div class="d-flex flex-wrap gap-2">
+                    {% set techs = [
+                        "Python", "Flask", "scikit-learn", "XGBoost", "LightGBM",
+                        "CatBoost", "NumPy", "Pandas", "Matplotlib", "Seaborn",
+                        "Plotly.js", "Bootstrap 5", "Jinja2", "HTML5", "CSS3", "JavaScript"
+                    ] %}
+                    {% for tech in techs %}
+                    <span class="tech-badge">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container" data-aos="fade-up">
+        <div class="cta-section">
+            <h3>Ready to Explore the System?</h3>
+            <p class="mb-4">Try the diabetes risk prediction or explore the model comparison dashboard</p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{{ url_for('predict') }}" class="btn btn-white">
+                    Start Prediction <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-white">
+                    View Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}DiabetesPredict — Dataset{% endblock %}
+
+{% block content %}
+<section class="py-5 section-gradient">
+    <div class="container">
+
+        <!-- Page Header -->
+        <div class="section-header" data-aos="fade-up">
+            <h2>About the <span class="text-gradient">Dataset</span></h2>
+            <p>PIMA Indians Diabetes Dataset</p>
+        </div>
+
+        <!-- Dataset Description -->
+        <div class="card border-0 shadow-sm mb-5" data-aos="fade-up">
+            <div class="card-body p-4 p-md-5">
+                <h5 class="fw-bold mb-3">Overview</h5>
+                <p>
+                    The <strong>PIMA Indians Diabetes Dataset</strong> originates from the
+                    <em>National Institute of Diabetes and Digestive and Kidney Diseases</em>.
+                    It was collected to diagnostically predict whether a patient has diabetes
+                    based on certain medical measurements. All patients in the dataset are females
+                    of Pima Indian heritage, at least 21 years of age.
+                </p>
+                <p class="mb-0">
+                    The dataset contains <strong>{{ dataset_info.total_records }}</strong> records with
+                    <strong>{{ dataset_info.features }}</strong> input features and a binary target variable
+                    (<code>Outcome</code>): 0 indicates non-diabetic, 1 indicates diabetic.
+                    It is widely used as a benchmark for classification algorithms in healthcare ML research.
+                </p>
+            </div>
+        </div>
+
+        <!-- Class Distribution -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="0">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-check-circle-fill" style="font-size: 2.5rem; color: #22c55e;"></i>
+                        <div class="stat-number mt-3" style="-webkit-text-fill-color: #22c55e;">{{ dataset_info.negative_class }}</div>
+                        <div class="stat-label">Non-Diabetic ({{ dataset_info.negative_pct }}%)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size: 2.5rem; color: #ef4444;"></i>
+                        <div class="stat-number mt-3" style="-webkit-text-fill-color: #ef4444;">{{ dataset_info.positive_class }}</div>
+                        <div class="stat-label">Diabetic ({{ dataset_info.positive_pct }}%)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Description Table -->
+        <div class="card border-0 shadow-sm mb-5 dashboard-card" data-aos="fade-up">
+            <div class="card-header">
+                <i class="bi bi-list-columns-reverse me-2 text-gradient"></i>Feature Descriptions
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-modern mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Feature Name</th>
+                                <th>Data Type</th>
+                                <th>Range</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feat in feature_details %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="fw-semibold"><code style="background: var(--color-blue-light); color: var(--color-blue); padding: 2px 8px; border-radius: 4px;">{{ feat.name }}</code></td>
+                                <td>{{ feat.type }}</td>
+                                <td>{{ feat.range }}</td>
+                                <td>{{ feat.description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Correlation Heatmap -->
+        <div class="card border-0 shadow-sm mb-5 dashboard-card" data-aos="fade-up">
+            <div class="card-header">
+                <i class="bi bi-grid-fill me-2 text-gradient"></i>Correlation Heatmap
+            </div>
+            <div class="card-body text-center p-4">
+                <img src="{{ url_for('static', filename='plots/correlation_heatmap.png') }}"
+                     class="img-fluid" style="max-height:550px; border-radius: var(--radius-sm);" alt="Correlation Heatmap"
+                     onerror="this.parentElement.innerHTML='<div class=\'py-5\' style=\'color: var(--color-text-secondary)\'><i class=\'bi bi-image display-4 d-block mb-2\'></i>Heatmap will appear after data analysis</div>'">
+            </div>
+        </div>
+
+        <!-- Data Source -->
+        <div class="card border-0 shadow-sm" data-aos="fade-up">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-2"><i class="bi bi-link-45deg me-2 text-gradient"></i>Data Source</h5>
+                <p class="mb-0" style="color: var(--color-text-secondary);">
+                    <strong style="color: var(--color-text);">{{ dataset_info.source }}</strong><br>
+                    Originally published in: Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., &amp;
+                    Johannes, R.S. (1988). "Using the ADAP learning algorithm to forecast the onset of
+                    diabetes mellitus." <em>Proceedings of the Symposium on Computer Applications and
+                    Medical Care</em>, pp. 261&ndash;265.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
