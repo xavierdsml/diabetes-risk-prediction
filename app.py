@@ -98,6 +98,39 @@ def index():
     return render_template("index.html", active_page="home")
 
 
+@app.route("/debug")
+def debug():
+    """Debug route to check model loading status."""
+    import traceback
+    info = {
+        "models_loaded": len(models),
+        "model_names": list(models.keys()),
+        "scaler_loaded": scaler is not None,
+        "models_dir": MODELS_DIR,
+        "models_dir_exists": os.path.exists(MODELS_DIR),
+    }
+    if os.path.exists(MODELS_DIR):
+        info["models_dir_contents"] = os.listdir(MODELS_DIR)
+    # Try loading again to capture error
+    if len(models) == 0:
+        try:
+            from ml.predict import load_all_models, load_scaler
+            m = load_all_models()
+            info["reload_success"] = True
+            info["reload_count"] = len(m)
+        except Exception as e:
+            info["reload_error"] = str(e)
+            info["reload_traceback"] = traceback.format_exc()
+    # Try training to capture error
+    if len(models) == 0:
+        try:
+            from ml.train import main as train_main
+            info["train_attempt"] = "starting"
+        except Exception as e:
+            info["train_import_error"] = str(e)
+    return jsonify(info)
+
+
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
     result = None
