@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}DiabetesPredict — Dashboard{% endblock %}
+
+{% block content %}
+<section class="py-5 section-gradient">
+    <div class="container">
+
+        <!-- Page Header -->
+        <div class="section-header" data-aos="fade-up">
+            <h2>Model Performance <span class="text-gradient">Dashboard</span></h2>
+            <p>Interactive comparison of 7 machine-learning models</p>
+        </div>
+
+        {% set best_model = '' %}
+        {% set best_acc = 0 %}
+        {% for name, m in metrics.items() %}
+            {% if m.accuracy > best_acc %}
+                {% set best_acc = m.accuracy %}
+                {% set best_model = name %}
+            {% endif %}
+        {% endfor %}
+
+        <!-- Row 1: Summary Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-trophy-fill" style="font-size: 2rem; color: #eab308;"></i>
+                        <div class="stat-label mt-3 mb-1">Best Model</div>
+                        <h5 class="fw-bold mb-0">
+                            {% for name, m in metrics.items() %}
+                                {% if m.accuracy == best_acc %}{{ name }}{% endif %}
+                            {% endfor %}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-bullseye" style="font-size: 2rem; color: #22c55e;"></i>
+                        <div class="stat-label mt-3 mb-1">Best Accuracy</div>
+                        <h5 class="fw-bold mb-0">
+                            {% for name, m in metrics.items() %}
+                                {% if m.accuracy == best_acc %}{{ "%.2f"|format(m.accuracy * 100) }}%{% endif %}
+                            {% endfor %}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card border-0 shadow-sm h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-cpu-fill" style="font-size: 2rem; color: var(--color-blue);"></i>
+                        <div class="stat-label mt-3 mb-1">Models Compared</div>
+                        <h5 class="fw-bold mb-0">{{ metrics | length }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Accuracy Bar Chart -->
+        <div class="card border-0 shadow-sm mb-5 dashboard-card" data-aos="fade-up">
+            <div class="card-header">
+                <i class="bi bi-bar-chart-fill me-2 text-gradient"></i>Model Accuracy Comparison
+            </div>
+            <div class="card-body">
+                <div id="accuracyChart" style="height:420px;"></div>
+            </div>
+        </div>
+
+        <!-- Row 3: Precision/Recall/F1 + ROC -->
+        <div class="row g-4 mb-5">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0">
+                <div class="card border-0 shadow-sm h-100 dashboard-card">
+                    <div class="card-header">
+                        <i class="bi bi-graph-up me-2 text-gradient"></i>Precision, Recall &amp; F1 Score
+                    </div>
+                    <div class="card-body">
+                        <div id="prfChart" style="height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm h-100 dashboard-card">
+                    <div class="card-header">
+                        <i class="bi bi-diagram-2 me-2 text-gradient"></i>ROC-AUC Comparison
+                    </div>
+                    <div class="card-body">
+                        <div id="rocChart" style="height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4: Confusion Matrices + Feature Importance -->
+        <div class="row g-4 mb-5">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0">
+                <div class="card border-0 shadow-sm h-100 dashboard-card">
+                    <div class="card-header">
+                        <i class="bi bi-grid-3x3-gap-fill me-2 text-gradient"></i>Confusion Matrices
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename='plots/confusion_matrices.png') }}"
+                             class="img-fluid" style="border-radius: var(--radius-sm);" alt="Confusion Matrices"
+                             onerror="this.parentElement.innerHTML='<div class=\'py-5\' style=\'color: var(--color-text-secondary)\'><i class=\'bi bi-image display-4 d-block mb-2\'></i>Plot will appear after model training</div>'">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm h-100 dashboard-card">
+                    <div class="card-header">
+                        <i class="bi bi-sort-down me-2 text-gradient"></i>Feature Importance
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename='plots/feature_importance.png') }}"
+                             class="img-fluid" style="border-radius: var(--radius-sm);" alt="Feature Importance"
+                             onerror="this.parentElement.innerHTML='<div class=\'py-5\' style=\'color: var(--color-text-secondary)\'><i class=\'bi bi-image display-4 d-block mb-2\'></i>Plot will appear after model training</div>'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 5: Full Metrics Table -->
+        <div class="card border-0 shadow-sm dashboard-card" data-aos="fade-up">
+            <div class="card-header">
+                <i class="bi bi-table me-2 text-gradient"></i>Complete Metrics Table
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-modern mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th class="text-center">Accuracy</th>
+                                <th class="text-center">Precision</th>
+                                <th class="text-center">Recall</th>
+                                <th class="text-center">F1 Score</th>
+                                <th class="text-center">ROC-AUC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for name, m in metrics.items() %}
+                            <tr>
+                                <td class="fw-semibold">{{ name }}</td>
+                                <td class="text-center">{{ "%.4f"|format(m.accuracy) }}</td>
+                                <td class="text-center">{{ "%.4f"|format(m.precision) }}</td>
+                                <td class="text-center">{{ "%.4f"|format(m.recall) }}</td>
+                                <td class="text-center">{{ "%.4f"|format(m.f1) }}</td>
+                                <td class="text-center">{{ "%.4f"|format(m.roc_auc) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const metricsData = {{ metrics | tojson }};
+    renderDashboardCharts(metricsData);
+</script>
+{% endblock %}
